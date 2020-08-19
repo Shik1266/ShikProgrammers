@@ -25,6 +25,8 @@ public class WhiteSnow extends AppCompatActivity {
     private int[] intputArr;
     private int[] answerArr;
 
+    private int total = 0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,15 +41,14 @@ public class WhiteSnow extends AppCompatActivity {
                 Log.e("khs", "onClick");
 
                 setInputData();
-                int a = 0;
-                while (!test(intputArr, a)) {
-                    Log.e("khs", "a = " + a);
-                    if (a == 9) {
+                int startIdx = 0;
+                while (!isRealDwarfs(intputArr, startIdx)) {
+                    Log.e("khs", "a = " + startIdx);
+                    if (startIdx == 9) {
                         break;
                     }
-                    a++;
+                    startIdx++;
                 }
-
             }
         });
     }
@@ -61,50 +62,74 @@ public class WhiteSnow extends AppCompatActivity {
         for (int i = 0; i < arr.length; i++) {
             intputArr[i] = Integer.parseInt(arr[i]);
         }
-
-//        showArrString(intputArr);
         Arrays.sort(intputArr);
+
+        showArrString(intputArr);
         Log.w("khs", "after");
         showArrString(intputArr);
     }
 
     private void showArrString(int[] array) {
+
         for (int i = 0; i < array.length; i++) {
-            Log.e("khstest", "array[" + i + "] = " + array[i]);
+            Log.d("khstest", "array[" + i + "] = " + array[i]);
         }
     }
 
-    private boolean test(int[] array, int start) {
-        Log.d("khs", "test====================================================================");
+    private void showArrString(int[] array,int a,int b) {
+        Log.e("showArrString","a = "+a+",,, b = "+b);
+        Arrays.sort(array);
+
+        for (int i = 0; i < array.length; i++) {
+            if(i != a && i != b){
+                Log.e("khstest", "array[" + i + "] = " + array[i]);
+
+                System.out.println(array[i]);
+            }
+        }
+    }
+
+    private boolean isRealDwarfs(int[] array, int start) {
         int sum = 0;
         int second;
-        Log.i("khs", "포문시작");
         for (second = start + 1; second < array.length; second++) {
             Log.e("khs", "세컨드 시작  = " + second);
             if (sum != 100) {
                 sum = 0;
             } else {
-                Log.e("khs", "정답이다!!!!!!!start = " + start + "// second = " + second);
+                Log.e("khstest", "정답이다!!!!!!!start = " + start + "// second = " + second);
+                showArrString(array,start,second);
+//                Log.e("total"," 1total = "+total);
                 return true;
             }
             for (int i = 0; i < array.length; i++) {
+                total++;
                 Log.e("khs", "i = " + i + ", start = " + start + ", second = " + second);
                 if (i == start || i == second) {
                     //TODO NOTHING
                 } else {
                     sum += array[i];
+                    Log.i("khssum ","array[i] = +"+array[i]);
+                    Log.e("khssum ","sum = +"+sum);
                     if (sum > 100) {
                         Log.e("khs", "break");
+                        sum = 0;
                         break;
                     }
                 }
             }
-
+            if (sum == 100) {
+                Log.e("khstest", "정답이다!!!!!!!start = " + start + "// second = " + second);
+                showArrString(array,start,second);
+//                Log.e("total"," 1total = "+total);
+                return true;
+            }
         }
         Log.e("khs", "sum = " + sum);
         if (sum != 100) {
             return false;
         } else {
+            Log.e("total"," 2total = "+total);
             Log.e("khs", "정답이다!!!!!!!start = " + start + "// second = " + second);
             return true;
         }
