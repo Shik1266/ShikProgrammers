@@ -18,3 +18,8 @@ DFS
 BFS
 탐욕법
 ※ 알고리즘 공부 순서 참고 사이트 :: https://baactree.tistory.com/14
+<<<<<<< HEAD
+a
+=======
+resetTest
+>>>>>>> 735cf01bd4ec388591d6038d25c6ae887135c0de
